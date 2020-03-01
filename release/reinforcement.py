@@ -15,7 +15,8 @@ from rdkit import Chem
 
 
 class Reinforcement(object):
-    def __init__(self, generator, predictor, get_reward):
+    #def __init__(self, generator, predictor, get_reward):
+    def __init__(self, generator, get_reward):
         """
         Constructor for the Reinforcement object.
 
@@ -45,7 +46,7 @@ class Reinforcement(object):
 
         super(Reinforcement, self).__init__()
         self.generator = generator
-        self.predictor = predictor
+        #self.predictor = predictor
         self.get_reward = get_reward
 
     def policy_gradient(self, data, n_batch=10, gamma=0.97,
@@ -108,15 +109,17 @@ class Reinforcement(object):
                     try:
                         mol = Chem.MolFromSmiles(trajectory[1:-1])
                         trajectory = '<' + Chem.MolToSmiles(mol) + '>'
-                        reward = self.get_reward(trajectory[1:-1], 
-                                                 self.predictor, 
-                                                 **kwargs)
+                        #reward = self.get_reward(trajectory[1:-1], 
+                        #                         self.predictor, 
+                        #                         **kwargs)
+                        reward = self.get_reward(trajectory[1:-1])
                     except:
                         reward = 0
                 else:
-                    reward = self.get_reward(trajectory[1:-1],
-                                             self.predictor, 
-                                             **kwargs)
+                    #reward = self.get_reward(trajectory[1:-1],
+                    #                         self.predictor, 
+                    #                         **kwargs)
+                    reward = self.get_reward(trajectory[1:-1])
 
             # Converting string of characters into tensor
             trajectory_input = data.char_tensor(trajectory)
