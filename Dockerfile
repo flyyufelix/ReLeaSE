@@ -85,4 +85,5 @@ COPY receptor.pdbqt .
 COPY checkpoints ./checkpoints
 COPY data ./data
 COPY release ./release
+COPY vina .
 
